@@ -1,0 +1,19 @@
+.count {
+    text-align: center;
+}
+
+.count button {
+    padding: 4px 20px;
+    font-size: 16px;
+    background-color: #3939;
+    color: #fff;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition-property: background-color, color;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+}
+
+.count button:hover {
+    background-color: #656161;
+}
