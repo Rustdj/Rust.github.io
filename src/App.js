@@ -5,11 +5,17 @@ import { Header } from './components/Header/Header';
 
 function App() {
   return (
+    
     <div className="App">
       <Header />
-      <BlogContent />
-      <Footer />
+      <main>
+        <BlogContent />
+      </main>
+      
+      <Footer year={new Date().getFullYear()} />
     </div>
+    
+    
   );
 }
 

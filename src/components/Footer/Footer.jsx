@@ -1,11 +1,9 @@
-import './Footer.css';
+import "./Footer.css";
 
-
-export const Footer = () => {
-    return (
-        <footer>
-            <span>© Raiker - 2022</span>
-        </footer>
-    )
-
-}
+export const Footer = ({ year }) => {
+  return (
+    <footer>
+      <span>© Raiker - {year}</span>
+    </footer>
+  );
+};
