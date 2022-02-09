@@ -1,31 +1,24 @@
-import { Component } from "react/cjs/react.development";
 import "../../../App.css";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-export class BlogCard extends Component {
-  state = {
-    likeCount: 0
-  }
-
-
-  toggleCount = () => {
-    this.setState(({likeCount}) => {
-      return{
-        likeCount: likeCount + 1 
-      }
-    })
-  }
+export const BlogCard = ({title, description, likePost, liked, deletePost}) => {
+  
+  const heartColor = liked ? 'red' : 'black'
     
-  render() {
-    return (
-      <div className="post">
-        <h2>{this.props.title}</h2>
-        <p>{this.props.description}</p>
-        <div>
-          <button onClick={this.toggleCount}>Like</button>
-          {this.state.likeCount}
-        </div>
+  return (
+    <div className="post">
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <div>
+        <button onClick={likePost}>
+          <FavoriteIcon style={{fill: heartColor}} />
+        </button>
       </div>
-    );
-  };
+      <button onClick={deletePost}>
+        <DeleteOutlineIcon />
+      </button>
+    </div>
+  );
   
   }
