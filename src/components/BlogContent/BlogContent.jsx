@@ -2,13 +2,13 @@ import "./BlogContent.css";
 import { posts } from "../../shared/projectData";
 import { BlogCard } from "./components/BlogCard";
 import { Component } from "react/cjs/react.production.min";
+import { AddPostForm } from "./components/AddPostForm";
 
 export class BlogContent extends Component {
   state = {
     showBlog: true,
-    blockArr: posts
-    
-    // blockArr: JSON.parse(localStorage.getItem('blogPosts')) || posts
+    showAddForm: false,
+    blockArr: JSON.parse(localStorage.getItem("blogPosts")) || posts,
   };
 
   likePost = (pos) => {
@@ -19,7 +19,7 @@ export class BlogContent extends Component {
       blockArr: temp,
     });
 
-    // localStorage.setItem('blogPosts', JSON.stringify(temp))
+    localStorage.setItem("blogPosts", JSON.stringify(temp));
   };
 
   toggleBlock = () => {
@@ -38,8 +38,8 @@ export class BlogContent extends Component {
       this.setState({
         blockArr: temp,
       });
+      localStorage.setItem("blogPosts", JSON.stringify(temp));
     }
-    // localStorage.setItem('blockArr', JSON.stringify(pos))
   };
 
   render() {
@@ -55,14 +55,34 @@ export class BlogContent extends Component {
         />
       );
     });
+
+    this.addOpenModal = () => {
+      this.setState({
+        showAddForm: true,
+      })
+    }
+
+
+    this.addHideModal = () => {
+      this.setState({
+        showAddForm: false,
+      })
+    }
+
+
+
     return (
       <>
-        <button onClick={this.toggleBlock}>
+
+        {this.state.showAddForm ? <AddPostForm addHideModal={this.addHideModal} /> : null}
+
+        <button className="buttons" onClick={this.toggleBlock}>
           {this.state.showBlog ? "Скрыть Blog" : "Показать Blog"}
         </button>
         {this.state.showBlog ? (
           <>
             <h1>Simple Blog</h1>
+            <button onClick={this.addOpenModal} className="buttons">Create new post</button>
             <div className="posts">
               <div className="post">{blogPosts}</div>
             </div>
