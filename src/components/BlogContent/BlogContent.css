@@ -26,3 +26,34 @@
     font-size: 16px;
     font-family: 'Nunito', sans-serif;
 }
+
+.buttonTop {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d15700;
+    color: #d15700;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    margin: 50px 60% 0px 0px;
+    transition: all .5s;
+}
+.buttonTop:hover {
+    background-color: #d15700;
+    color: white;
+    transition: all .5s;
+}
+
+
+.post {
+    padding: 30px 70px 0px 70px;
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid;
+    margin-top: 30px;
+    width: 48%;
+    left: 21%;
+    background-color: aliceblue;
+}
+h1 {
+    color: #fff;
+}

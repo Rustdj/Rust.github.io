@@ -76,15 +76,15 @@ export class BlogContent extends Component {
 
         {this.state.showAddForm ? <AddPostForm addHideModal={this.addHideModal} /> : null}
 
-        <button className="buttons" onClick={this.toggleBlock}>
-          {this.state.showBlog ? "Скрыть Blog" : "Показать Blog"}
+        <button className="buttonTop" onClick={this.toggleBlock}>
+          {this.state.showBlog ? "Hide Blog" : "Show Blog"}
         </button>
         {this.state.showBlog ? (
           <>
             <h1>Simple Blog</h1>
             <button onClick={this.addOpenModal} className="buttons">Create new post</button>
             <div className="posts">
-              <div className="post">{blogPosts}</div>
+              <div className="postWrapper">{blogPosts}</div>
             </div>
           </>
         ) : null}

@@ -4,18 +4,18 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export const BlogCard = ({title, description, likePost, liked, deletePost}) => {
   
-  const heartColor = liked ? 'red' : 'black'
+  const heartColor = liked ? 'red' : '#c4c7c4'
     
   return (
     <div className="post">
       <h2>{title}</h2>
       <p>{description}</p>
-      <div>
-        <button onClick={likePost}>
+      <>
+        <button className="heartButton" onClick={likePost}>
           <FavoriteIcon style={{fill: heartColor}} />
         </button>
-      </div>
-      <button onClick={deletePost}>
+      </>
+      <button className="trashButton" onClick={deletePost}>
         <DeleteOutlineIcon />
       </button>
     </div>
