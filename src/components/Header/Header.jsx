@@ -4,12 +4,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 
 export const Header = () => {
-  
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
   return (
     <header>
-      <FormGroup>
-        <FormControlLabel control={<Switch defaultChecked />} label="Label" />
-      </FormGroup>
+      <Switch {...label} defaultChecked />
       <nav className="header">
         <a href="#first">Home</a>
         <a href="#second">About</a>

@@ -7,7 +7,11 @@ header {
     line-height: 3;
 }
 .header {
-    margin-top: -39px;
+    margin-top: -47px;
+}
+
+.MuiSwitch-root {
+    margin-left: 83%;
 }
 
 header a {

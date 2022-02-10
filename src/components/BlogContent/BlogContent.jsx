@@ -42,6 +42,36 @@ export class BlogContent extends Component {
     }
   };
 
+  addNewBlogPost = (blogPost) => {
+
+    this.setState((state) => {
+      const posts = [...state.blockArr];
+      posts.push(blogPost);
+      localStorage.setItem("blogPosts", JSON.stringify(posts));
+      return{
+        blockArr: posts
+      }
+    })
+    
+  };
+
+  
+
+
+  handleEscape = (e) => {
+    if (e.key === "Escape" && this.state.showAddForm) {
+      this.addHideModal();
+    }
+  };
+
+  componentDidMount() {
+    window.addEventListener("keyup", this.handleEscape);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keyup", this.handleEscape);
+  }
+
   render() {
     const blogPosts = this.state.blockArr.map((item, pos) => {
       return (
@@ -59,22 +89,24 @@ export class BlogContent extends Component {
     this.addOpenModal = () => {
       this.setState({
         showAddForm: true,
-      })
-    }
-
+      });
+    };
 
     this.addHideModal = () => {
       this.setState({
         showAddForm: false,
-      })
-    }
-
-
+      });
+    };
 
     return (
       <>
-
-        {this.state.showAddForm ? <AddPostForm addHideModal={this.addHideModal} /> : null}
+        {this.state.showAddForm ? (
+          <AddPostForm
+            blockArr={this.state.blockArr}
+            addHideModal={this.addHideModal}
+            addNewBlogPost={this.addNewBlogPost}
+          />
+        ) : null}
 
         <button className="buttonTop" onClick={this.toggleBlock}>
           {this.state.showBlog ? "Hide Blog" : "Show Blog"}
@@ -82,7 +114,9 @@ export class BlogContent extends Component {
         {this.state.showBlog ? (
           <>
             <h1>Simple Blog</h1>
-            <button onClick={this.addOpenModal} className="buttons">Create new post</button>
+            <button onClick={this.addOpenModal} className="buttons">
+              Create new post
+            </button>
             <div className="posts">
               <div className="postWrapper">{blogPosts}</div>
             </div>
