@@ -28,6 +28,7 @@
 }
 
 .buttonTop {
+
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #d15700;
@@ -37,6 +38,21 @@
     margin: 50px 60% 0px 0px;
     transition: all .5s;
 }
+
+.buttonRight {
+    
+    padding: 10px;
+    border-radius: 8px;
+    position: absolute;
+    border: 1px solid #d15700;
+    color: #d15700;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    left: 75%;
+    top: 114px;
+    transition: all .5s;
+}
+
 .buttonTop:hover {
     background-color: #d15700;
     color: white;
@@ -56,4 +72,11 @@
 }
 h1 {
     color: #fff;
+}
+.modal button {
+    color: #fff;
+    margin-top: 30px;
+    border: 1px solid;
+    border-radius: 8px;
+    padding: 10px;
 }

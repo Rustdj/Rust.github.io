@@ -1,72 +1,73 @@
 import "./AddPostForm.css";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { Component } from "react/cjs/react.production.min";
+import { useState } from "react";
+import React from "react";
 
-export class AddPostForm extends Component {
-  state = {
-    postTitle: "",
-    postDescr: "",
+export default function AddPostForm({
+  onClose,
+  listData,
+  addNewBlogPost,
+  closeModal,
+  thumbnailUrl,
+}) {
+  const [postTitle, setPostTitle] = useState("");
+  const [descr, setDescr] = useState("");
+
+  const handleFormTitleChange = (e) => {
+    setPostTitle(e.target.value);
   };
 
-  handlePostTitleChange = (e) => {
-    this.setState({
-      postTitle: e.target.value,
-    });
+  const handleFormDescrChange = (e) => {
+    setDescr(e.target.value);
   };
 
-  handlePostDescrChange = (e) => {
-    this.setState({
-      postDescr: e.target.value,
-    });
-  };
-
-  createPost = () => {
+  const createPost = (e) => {
+    e.preventDefault();
     const post = {
-      id: this.props.blockArr + 1,
-      title: this.state.postTitle,
-      description: this.state.postDescr,
+      id: listData.length + 1,
+      title: postTitle,
+      description: descr,
+      src: thumbnailUrl,
       liked: false,
     };
-    
-    this.props.addNewBlogPost(post)
-    this.props.addHideModal();
+    console.log(post);
+    addNewBlogPost(post);
+    closeModal();
   };
 
-  render() {
-    const addHideModal = this.props.addHideModal;
-    return (
-      <>
-        <form action="" className="addPostForm">
-          <button onClick={addHideModal}>
-            <HighlightOffIcon />
+  return (
+    <>
+      <form action="" className="addPostForm">
+        <button onClick={onClose} className="btnClose">
+          <HighlightOffIcon />
+        </button>
+        <h2>Create post</h2>
+        <div className="input">
+          <input
+            type="text"
+            name="postTitle"
+            placeholder="title post"
+            value={postTitle}
+            onChange={handleFormTitleChange}
+            required
+          />
+        </div>
+        <div className="textarea">
+          <textarea
+            name="postDescription"
+            placeholder="description post"
+            value={descr}
+            onChange={handleFormDescrChange}
+            required
+          />
+        </div>
+        <div>
+          <button onClick={createPost} className="buttons" type="submit">
+            Add new post
           </button>
-
-          <h2>Create new post</h2>
-          <div>
-            <input
-              type="text"
-              name="postTitle"
-              placeholder="title post"
-              value={this.state.postTitle}
-              onChange={this.handlePostTitleChange}
-            />
-          </div>
-          <div>
-            <textarea
-              name="postDescription"
-              placeholder="description post"
-              value={this.state.postDescr}
-              onChange={this.handlePostDescrChange}
-            />
-          </div>
-          <div>
-            <button onClick={this.createPost} className="buttons" type="button">
-              Add new post
-            </button>
-          </div>
-        </form>
-        <div onClick={addHideModal} className="overlay"></div>
-      </>
-    );
-  }
+        </div>
+      </form>
+      <div className="overlay"></div>
+    </>
+  );
 }

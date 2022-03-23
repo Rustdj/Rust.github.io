@@ -60,7 +60,12 @@ button {
   left: 99px;
   top: 35px;
 }
-
+.heartButton:hover {
+  transform: translate(-45);
+}
+.btnClose {
+  margin: 0px 0px 0px 90%;
+}
 
 
 

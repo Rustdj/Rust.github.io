@@ -19,7 +19,7 @@
 
 .addPostForm h2 {
     margin: 0;
-    margin-bottom: 10px;
+    margin-bottom: 35px;
 }
 
 .overlay {
@@ -37,4 +37,31 @@
 
 .addPostForm input, .addPostForm textarea {
     width: 100%;
+}
+
+.input input {
+    width: 250px;
+    border-radius: 4px;
+    border: 1px solid #80808087;
+    font-size: 16px;
+    padding: 5px;
+    align-items: center;
+    outline: none;
+}
+
+.input input:focus {
+    box-shadow: 1px 1px 5px;
+}
+
+.textarea textarea {
+    outline: none;
+    border-radius: 4px;
+    border: 1px solid #80808087;
+    font-size: 16px;
+    padding: 5px;
+    align-items: center;
+}
+
+.textarea textarea:focus {
+    box-shadow: 1px 1px 5px;
 }
