@@ -3,23 +3,38 @@ import { BlogCard } from "./components/BlogCard";
 import AddPostForm from "./components/AddPostForm";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import EditPostForm from "./components/EditPostForm";
 
 export const BlogContent = () => {
   const [listData, setListData] = useState([]);
   const [form, setForm] = useState(false);
+  const [editForm, setEditForm] = useState(false);
+  const [selectedPost, setSelectedPost] = useState({});
+
   
 
   const onClose = () => setForm(false);
+  const editClose = () => setEditForm(false)
 
   // API async
   useEffect(() => {
     axios
-      .get("https://jsonplaceholder.typicode.com/photos?_limit=10")
+      .get("https://jsonplaceholder.typicode.com/posts?_limit=10")
       .then((response) => {
         console.log(response.data);
         setListData([...listData, ...response.data]);
       });
   }, []);
+
+
+  // editBlogPost
+  const editBlogPost = (updateBlogPost) => {
+    axios.put(`https://jsonplaceholder.typicode.com/posts?_limit=10 ${updateBlogPost.id}`, updateBlogPost)
+    .then((response) => {
+      console.log("Correct posts =>", response.data);
+      setListData([...listData, ...response.data]);
+    });
+  }
 
   // liked
   const likePost = (elem) => {
@@ -50,13 +65,12 @@ export const BlogContent = () => {
     setListData(temp);
   };
 
-  // toggleBlock
+  // editPost
+  const handleSelectPost = (blogPost) => {
+    setSelectedPost(blogPost)
+  }
 
   // showModal
-  // const showModal = () => {
-  //   if (form) return;
-  //   setForm(true);
-  // };
   const showModal = () => {
     setForm(true);
   }
@@ -66,6 +80,19 @@ export const BlogContent = () => {
     setForm(false);
   };
 
+  // showEditModal
+  const showEditModal = () => {
+    setEditForm(true);
+  }
+
+  // closeEditModal
+  const closeEditModal = () => {
+    setEditForm(false);
+  };
+
+  
+    
+  console.log(selectedPost)
   return (
     <>
     {form}
@@ -75,16 +102,31 @@ export const BlogContent = () => {
       {listData.map((item, elem) => {
         return (
           <BlogCard
-            key={item.id}
+            //key={item.id}
             liked={item.liked}
             thumbnailUrl={item.thumbnailUrl}
             title={item.title}
+            body={item.body}
             description={item.description}
             likePost={() => likePost(elem)}
             deletePost={() => deletePost(elem)}
+            showEditModal={showEditModal}
+            handleSelectPost={() => handleSelectPost(item)}
           />
         );
       })}
+
+      {
+        editForm && (
+          <EditPostForm
+            editClose={editClose}
+            closeEditModal={closeEditModal}
+            addNewBlogPost={addNewBlogPost}
+            selectedPost={selectedPost}
+            editBlogPost={editBlogPost}
+          />
+        )
+      }
 
       {form ? (
         <AddPostForm

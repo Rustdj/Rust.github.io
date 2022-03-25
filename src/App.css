@@ -52,12 +52,12 @@ button {
 }
 .trashButton {
   position: absolute;
-  right: 99px;
+  right: 20px;
   top: 35px;
 }
 .heartButton {
   position: absolute;
-  left: 99px;
+  left: 20px;
   top: 35px;
 }
 .heartButton:hover {
@@ -65,6 +65,11 @@ button {
 }
 .btnClose {
   margin: 0px 0px 0px 90%;
+}
+
+.correctText {
+  position: absolute;
+  top: 10px;
 }
 
 
