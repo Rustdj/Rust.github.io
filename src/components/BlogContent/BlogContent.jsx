@@ -2,39 +2,46 @@ import "./BlogContent.css";
 import { BlogCard } from "./components/BlogCard";
 import AddPostForm from "./components/AddPostForm";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditPostForm from "./components/EditPostForm";
+
 
 export const BlogContent = () => {
   const [listData, setListData] = useState([]);
   const [form, setForm] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const [selectedPost, setSelectedPost] = useState({});
-
   
 
   const onClose = () => setForm(false);
-  const editClose = () => setEditForm(false)
+  const editClose = () => setEditForm(false);
 
   // API async
-  useEffect(() => {
+  const fetchPosts = () => {
     axios
-      .get("https://jsonplaceholder.typicode.com/posts?_limit=10")
+      .get("https://jsonplaceholder.typicode.com/posts/")
       .then((response) => {
-        console.log(response.data);
+        console.log("Getting posts =>", response.data);
         setListData([...listData, ...response.data]);
       });
-  }, []);
+  };
 
-
-  // editBlogPost
+  //editBlogPost
   const editBlogPost = (updateBlogPost) => {
-    axios.put(`https://jsonplaceholder.typicode.com/posts?_limit=10 ${updateBlogPost.id}`, updateBlogPost)
-    .then((response) => {
-      console.log("Correct posts =>", response.data);
-      setListData([...listData, ...response.data]);
-    });
-  }
+    axios
+      .put(`https://jsonplaceholder.typicode.com/posts/${updateBlogPost.id}`, updateBlogPost)
+      .then((response) => {
+        console.log("Correct post =>", response.data);
+        fetchPosts()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchPosts()
+  }, []);
 
   // liked
   const likePost = (elem) => {
@@ -61,19 +68,19 @@ export const BlogContent = () => {
   // addNewBlogPost
   const addNewBlogPost = (blogPost) => {
     const temp = [...listData];
-    temp.push(blogPost);
+    temp.unshift(blogPost);
     setListData(temp);
   };
 
   // editPost
   const handleSelectPost = (blogPost) => {
-    setSelectedPost(blogPost)
-  }
+    setSelectedPost(blogPost);
+  };
 
   // showModal
   const showModal = () => {
     setForm(true);
-  }
+  };
 
   // closeModal
   const closeModal = () => {
@@ -83,26 +90,24 @@ export const BlogContent = () => {
   // showEditModal
   const showEditModal = () => {
     setEditForm(true);
-  }
+  };
 
   // closeEditModal
   const closeEditModal = () => {
     setEditForm(false);
   };
 
-  
-    
-  console.log(selectedPost)
+  //console.log(selectedPost);
   return (
     <>
-    {form}
+      {form}
       <div onClick={showModal} className="modal">
         <button>Add post</button>
       </div>
       {listData.map((item, elem) => {
         return (
           <BlogCard
-            //key={item.id}
+            key={elem}
             liked={item.liked}
             thumbnailUrl={item.thumbnailUrl}
             title={item.title}
@@ -116,17 +121,15 @@ export const BlogContent = () => {
         );
       })}
 
-      {
-        editForm && (
-          <EditPostForm
-            editClose={editClose}
-            closeEditModal={closeEditModal}
-            addNewBlogPost={addNewBlogPost}
-            selectedPost={selectedPost}
-            editBlogPost={editBlogPost}
-          />
-        )
-      }
+      {editForm && (
+        <EditPostForm
+          editClose={editClose}
+          closeEditModal={closeEditModal}
+          addNewBlogPost={addNewBlogPost}
+          selectedPost={selectedPost}
+          editBlogPost={editBlogPost}
+        />
+      )}
 
       {form ? (
         <AddPostForm

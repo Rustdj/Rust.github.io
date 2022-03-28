@@ -5,9 +5,9 @@ import React from "react";
 
 export default function EditPostForm({
   editClose,
-  closeEditModal,
   selectedPost,
   editBlogPost,
+  closeEditModal,
 }) {
   const [postTitle, setPostTitle] = useState(selectedPost.title);
   const [descr, setDescr] = useState(selectedPost.body);
@@ -22,13 +22,14 @@ export default function EditPostForm({
 
   const savePost = (e) => {
     e.preventDefault();
-    const post = {
+    const db = {
+      id: selectedPost.id,
       title: postTitle,
       description: descr,
-      liked: false,
+      liked: selectedPost.liked,
     };
-    console.log(post);
-    editBlogPost(post);
+    console.log(db);
+    editBlogPost(db);
     closeEditModal();
   };
 
@@ -60,7 +61,7 @@ export default function EditPostForm({
         </div>
         <div>
           <button className="buttons" type="submit">
-           Save
+            Save
           </button>
         </div>
       </form>

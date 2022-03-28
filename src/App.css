@@ -6,8 +6,8 @@ body {
 }
 
 .App {
-  text-align: center;
-  background-color: #23232d;
+  /* text-align: center; */
+  background-color: #478dbf;
 }
 
 .App-logo {
@@ -70,6 +70,8 @@ button {
 .correctText {
   position: absolute;
   top: 10px;
+  left: 50%;
+  right: 50%;
 }
 
 

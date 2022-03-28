@@ -1,7 +1,7 @@
 import "../../../App.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from "@mui/icons-material/Create";
 
 export const BlogCard = ({
   title,
@@ -20,7 +20,7 @@ export const BlogCard = ({
   const showEditForm = () => {
     handleSelectPost();
     showEditModal();
-  }
+  };
 
   return (
     <div style={{ backgroundColor: background }} className="post">
@@ -28,7 +28,7 @@ export const BlogCard = ({
       <p>{description}</p>
       <p>{body}</p>
       <button className="correctText" onClick={showEditForm}>
-        <CreateIcon style={{fill: correctText}}/>
+        <CreateIcon style={{ fill: correctText }} />
       </button>
       <button className="heartButton" onClick={likePost}>
         <FavoriteIcon style={{ fill: heartColor, fontSize: 30 }} />

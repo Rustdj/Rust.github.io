@@ -74,9 +74,10 @@ h1 {
     color: #fff;
 }
 .modal button {
+    position: absolute;
     color: #fff;
-    margin-top: 30px;
     border: 1px solid;
     border-radius: 8px;
     padding: 10px;
+    left: 83px;
 }

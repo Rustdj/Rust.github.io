@@ -60,6 +60,8 @@
     font-size: 16px;
     padding: 5px;
     align-items: center;
+    width: 350px;
+    height: 112px;
 }
 
 .textarea textarea:focus {
