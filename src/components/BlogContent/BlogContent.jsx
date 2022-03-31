@@ -4,13 +4,14 @@ import AddPostForm from "./components/AddPostForm";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import EditPostForm from "./components/EditPostForm";
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const BlogContent = () => {
   const [listData, setListData] = useState([]);
   const [form, setForm] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const [selectedPost, setSelectedPost] = useState({});
+  const [pending, setPending] = useState(false);
   
 
   const onClose = () => setForm(false);
@@ -19,58 +20,82 @@ export const BlogContent = () => {
   // API async
   const fetchPosts = () => {
     axios
-      .get("https://jsonplaceholder.typicode.com/posts/")
+      .get(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/`)
       .then((response) => {
         console.log("Getting posts =>", response.data);
         setListData([...listData, ...response.data]);
       });
   };
 
+  // addNewBlogPost
+  const addNewBlogPost = (blogPost) => {
+    setPending(true);
+    axios
+        .post(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/`, blogPost)
+        .then((response) => {
+          console.log("Mounted post =>", response.data);
+          //fetchPosts();
+          setPending(pending);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+  };
+
   //editBlogPost
   const editBlogPost = (updateBlogPost) => {
     axios
-      .put(`https://jsonplaceholder.typicode.com/posts/${updateBlogPost.id}`, updateBlogPost)
+      .put(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/${updateBlogPost.id}`, updateBlogPost)
       .then((response) => {
         console.log("Correct post =>", response.data);
-        fetchPosts()
+        //fetchPosts();
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  useEffect(() => {
-    fetchPosts()
-  }, []);
-
-  // liked
-  const likePost = (elem) => {
-    const temp = [...listData];
-    temp[elem].liked = !temp[elem].liked;
-
-    setListData(temp);
-  };
-
   // delete posts
-  const deletePost = (elem) => {
-    if (window.confirm(`Delete? ${listData[elem].title}`)) {
-      const temp = [...listData];
-      temp.splice(elem, 1);
-      setListData(temp);
+  const deletePost = (blogPost) => {
+    if (window.confirm(`Удалить ${blogPost.title}?`)) {
+      setPending(true);
+      axios
+        .delete(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/${blogPost.id}`, blogPost)
+        .then((response) => {
+          console.log("Deleted post =>", response.data);
+          //fetchPosts();
+          setPending(pending);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
-  // loading
-  if (listData.length === 0) {
-    <h1>LOADING...</h1>;
-  }
-
-  // addNewBlogPost
-  const addNewBlogPost = (blogPost) => {
-    const temp = [...listData];
-    temp.unshift(blogPost);
-    setListData(temp);
+  // liked
+  const likePost = (blogPost) => {
+      const temp = [...listData];
+      temp[blogPost].liked = !temp[blogPost].liked;
+      setListData(temp);
+    axios
+        .put(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/${blogPost.id}`, temp)
+        .then((response) => {
+          console.log("Liked post =>", response.data);
+          fetchPosts();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
+
+  useEffect(() => {
+    console.log('render');
+    fetchPosts();
+  }, []);
+
+  // loading
+  if (listData.length === 0) <h1>LOADING...</h1>;
 
   // editPost
   const handleSelectPost = (blogPost) => {
@@ -100,6 +125,7 @@ export const BlogContent = () => {
   //console.log(selectedPost);
   return (
     <>
+    {pending && <CircularProgress color="inherit"/>}
       {form}
       <div onClick={showModal} className="modal">
         <button>Add post</button>
@@ -113,9 +139,9 @@ export const BlogContent = () => {
             title={item.title}
             body={item.body}
             description={item.description}
-            likePost={() => likePost(elem)}
-            deletePost={() => deletePost(elem)}
             showEditModal={showEditModal}
+            likePost={() => likePost(elem)}
+            deletePost={() => deletePost(item)}
             handleSelectPost={() => handleSelectPost(item)}
           />
         );
@@ -184,7 +210,6 @@ export const BlogContent = () => {
 // };
 
 // addNewBlogPost = (blogPost) => {
-
 //   this.setState((state) => {
 //     const posts = [...state.blockArr];
 //     posts.push(blogPost);

@@ -5,13 +5,11 @@ import React from "react";
 
 export default function AddPostForm({
   onClose,
-  listData,
   addNewBlogPost,
   closeModal,
-  thumbnailUrl,
 }) {
   const [postTitle, setPostTitle] = useState("");
-  const [descr, setDescr] = useState("");
+  const [postDescr, setDescr] = useState("");
 
   const handleFormTitleChange = (e) => {
     setPostTitle(e.target.value);
@@ -24,10 +22,8 @@ export default function AddPostForm({
   const createPost = (e) => {
     e.preventDefault();
     const post = {
-      id: listData.length + 1,
       title: postTitle,
-      description: descr,
-      src: thumbnailUrl,
+      description: postDescr,
       liked: false,
     };
     console.log(post);
@@ -56,7 +52,7 @@ export default function AddPostForm({
           <textarea
             name="postDescription"
             placeholder="description post"
-            value={descr}
+            value={postDescr}
             onChange={handleFormDescrChange}
             required
           />

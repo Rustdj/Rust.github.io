@@ -8,9 +8,10 @@ export default function EditPostForm({
   selectedPost,
   editBlogPost,
   closeEditModal,
+  
 }) {
   const [postTitle, setPostTitle] = useState(selectedPost.title);
-  const [descr, setDescr] = useState(selectedPost.body);
+  const [postDescr, setDescr] = useState(selectedPost.description);
 
   const handleFormTitleChange = (e) => {
     setPostTitle(e.target.value);
@@ -22,15 +23,16 @@ export default function EditPostForm({
 
   const savePost = (e) => {
     e.preventDefault();
-    const db = {
+    const post = {
       id: selectedPost.id,
       title: postTitle,
-      description: descr,
+      description: postDescr,
       liked: selectedPost.liked,
     };
-    console.log(db);
-    editBlogPost(db);
+    console.log(post);
+    editBlogPost(post);
     closeEditModal();
+    
   };
 
   return (
@@ -54,7 +56,7 @@ export default function EditPostForm({
           <textarea
             name="postDescription"
             placeholder="description post"
-            value={descr}
+            value={postDescr}
             onChange={handleFormDescrChange}
             required
           />
