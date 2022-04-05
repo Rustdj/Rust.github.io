@@ -75,6 +75,48 @@ button {
 }
 
 
+/* form */
+
+.loginForm {
+  text-align: center;
+  height: 375px;
+}
+
+.loginForm input {
+  margin-top: 20px;
+  padding: 10px;
+  outline: none;
+  width: 169px;
+}
+
+.btnLogin {
+  margin-top: 20px;
+  border: 1px solid #000;
+  padding: 10px;
+  transition: all 0.5s;
+  width: 190px;
+}
+
+.btnLogin:hover {
+  transition: all 0.5s;
+  background-color: #000;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.btnLogin:focus {
+  transform: scale(0.9);
+}
+
+.headerLogin {
+  text-align: center;
+  margin-bottom: 56px;
+  margin-top: 82px;
+  letter-spacing: 8px;
+  font-family: fantasy;
+}
+
+
 
 
 

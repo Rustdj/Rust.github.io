@@ -1,10 +1,11 @@
-import "./BlogContent.css";
+import "./BlogPage.css";
 import { BlogCard } from "./components/BlogCard";
 import AddPostForm from "./components/AddPostForm";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import EditPostForm from "./components/EditPostForm";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
+import { postsUrl } from "../../shared/projectData";
 
 export const BlogContent = () => {
   const [listData, setListData] = useState([]);
@@ -12,44 +13,50 @@ export const BlogContent = () => {
   const [editForm, setEditForm] = useState(false);
   const [selectedPost, setSelectedPost] = useState({});
   const [pending, setPending] = useState(false);
-  
 
   const onClose = () => setForm(false);
   const editClose = () => setEditForm(false);
 
   // API async
+  let source;
   const fetchPosts = () => {
+    source = axios.CancelToken.source();
     axios
-      .get(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/`)
+      .get(postsUrl)
       .then((response) => {
         console.log("Getting posts =>", response.data);
         setListData([...listData, ...response.data]);
-      });
+    });
   };
+
+  useEffect(() => {
+    if (source) {
+      source.cancel()
+    }
+    fetchPosts()
+  }, [])
 
   // addNewBlogPost
   const addNewBlogPost = (blogPost) => {
     setPending(true);
     axios
-        .post(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/`, blogPost)
-        .then((response) => {
-          console.log("Mounted post =>", response.data);
-          //fetchPosts();
-          setPending(pending);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
+      .post(postsUrl, blogPost)
+      .then((response) => {
+        console.log("Mounted post =>", response.data);
+        fetchPosts();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   //editBlogPost
   const editBlogPost = (updateBlogPost) => {
     axios
-      .put(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/${updateBlogPost.id}`, updateBlogPost)
+      .put(`${postsUrl}${updateBlogPost.id}`, updateBlogPost)
       .then((response) => {
         console.log("Correct post =>", response.data);
-        //fetchPosts();
+        fetchPosts();
       })
       .catch((err) => {
         console.log(err);
@@ -61,10 +68,10 @@ export const BlogContent = () => {
     if (window.confirm(`Удалить ${blogPost.title}?`)) {
       setPending(true);
       axios
-        .delete(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/${blogPost.id}`, blogPost)
+        .delete(`${postsUrl}${blogPost.id}`, blogPost)
         .then((response) => {
           console.log("Deleted post =>", response.data);
-          //fetchPosts();
+          fetchPosts();
           setPending(pending);
         })
         .catch((err) => {
@@ -75,24 +82,19 @@ export const BlogContent = () => {
 
   // liked
   const likePost = (blogPost) => {
-      const temp = [...listData];
-      temp[blogPost].liked = !temp[blogPost].liked;
-      setListData(temp);
+    const temp = [...listData];
+    temp[blogPost].liked = !temp[blogPost].liked;
+    setListData(temp);
     axios
-        .put(`https://5fb3db44b6601200168f7fba.mockapi.io/api/posts/${blogPost.id}`, temp)
-        .then((response) => {
-          console.log("Liked post =>", response.data);
-          fetchPosts();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .put(`${postsUrl}${blogPost.id}`, temp)
+      .then((response) => {
+        console.log("Liked post =>", response.data);
+        //fetchPosts();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
-  useEffect(() => {
-    console.log('render');
-    fetchPosts();
-  }, []);
 
   // loading
   if (listData.length === 0) <h1>LOADING...</h1>;
@@ -125,7 +127,7 @@ export const BlogContent = () => {
   //console.log(selectedPost);
   return (
     <>
-    {pending && <CircularProgress color="inherit"/>}
+      {pending && <CircularProgress color="inherit" />}
       {form}
       <div onClick={showModal} className="modal">
         <button>Add post</button>

@@ -1,18 +1,25 @@
 import "./Header.css";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import { NavLink } from "react-router-dom";
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
-export const Header = () => {
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+export const Header = ({ isLoggerId, setIsLoggedIn, userName }) => {
+  const handleLogOut = () => {
+    localStorage.setItem('isLoggerId', false);
+    setIsLoggedIn(false);
+  };
   return (
-    <header>
-      <Switch {...label} defaultChecked />
-      <nav className="header">
-        <a href="#first">Home</a>
-        <a href="#second">About</a>
-        <a href="#third">Contact</a>
-      </nav>
+    <header className="headerMain">
+      {isLoggerId ? (
+        <nav>
+          <div className="top">Welcome dear user, <strong>{userName}</strong></div>
+          <NavLink onClick={handleLogOut} to="/login">
+            LogOut
+            <MeetingRoomIcon/>
+          </NavLink>
+        </nav>
+      ) : (
+        <h2>Welcome dear user!</h2>
+      )}
     </header>
   );
 };

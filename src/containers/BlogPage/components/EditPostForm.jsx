@@ -59,6 +59,7 @@ export default function EditPostForm({
             value={postDescr}
             onChange={handleFormDescrChange}
             required
+            rows={8}
           />
         </div>
         <div>
