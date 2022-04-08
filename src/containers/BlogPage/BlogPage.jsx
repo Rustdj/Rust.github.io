@@ -7,7 +7,7 @@ import EditPostForm from "./components/EditPostForm";
 import CircularProgress from "@mui/material/CircularProgress";
 import { postsUrl } from "../../shared/projectData";
 
-export const BlogContent = () => {
+export const BlogPage = () => {
   const [listData, setListData] = useState([]);
   const [form, setForm] = useState(false);
   const [editForm, setEditForm] = useState(false);
@@ -129,7 +129,7 @@ export const BlogContent = () => {
     <>
       {pending && <CircularProgress color="inherit" />}
       {form}
-      <div onClick={showModal} className="modal">
+      <div onClick={showModal} className="modalAdd">
         <button>Add post</button>
       </div>
       {listData.map((item, elem) => {
@@ -172,135 +172,27 @@ export const BlogContent = () => {
   );
 };
 
-//export class BlogContent extends Component {
 
-// state = {
-//   showBlog: true,
-//   showAddForm: false,
-//   blockArr: [],
-// };
 
-// likePost = (pos) => {
-//   const temp = [...this.state.blockArr];
-//   temp[pos].liked = !temp[pos].liked;
+{/* <Routes>
+                
+                
+                  <Route exact path="/" element={() => {
+                    if(isLoggerId) return <Navigate to="/blog"/>
+                    return <Navigate to="/login" />
+                  }} />
+                
 
-//   this.setState({
-//     blockArr: temp,
-//   });
+                <Route 
+                  exact
+                  path="/login" 
+                  element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>}/>
 
-//   localStorage.setItem("blogPosts", JSON.stringify(temp));
-// };
 
-// toggleBlock = () => {
-//   this.setState(({ showBlog }) => {
-//     return {
-//       showBlog: !showBlog,
-//     };
-//   });
-// };
+                <Route 
+                  exact
+                  path="/blog" 
+                  element={<BlogPage setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>}/>
 
-// deletePost = (pos) => {
-//   if (window.confirm(`Delete?  ${this.state.blockArr[pos].title}`)) {
-//     const temp = [...this.state.blockArr];
-//     temp.splice(pos, 1);
-
-//     this.setState({
-//       blockArr: temp,
-//     });
-//     localStorage.setItem("blogPosts", JSON.stringify(temp));
-//   }
-// };
-
-// addNewBlogPost = (blogPost) => {
-//   this.setState((state) => {
-//     const posts = [...state.blockArr];
-//     posts.push(blogPost);
-//     localStorage.setItem("blogPosts", JSON.stringify(posts));
-//     return{
-//       blockArr: posts
-//     }
-//   })
-
-// };
-
-// handleEscape = (e) => {
-//   if (e.key === "Escape" && this.state.showAddForm) {
-//     this.addHideModal();
-//   }
-// };
-
-// componentDidMount() {
-//   axios.get('https://jsonplaceholder.typicode.com/photos?_limit=10')
-//   .then((response) => {
-//     this.setState({
-//       blockArr: response.data
-//     })
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-
-//   window.addEventListener("keyup", this.handleEscape);
-// }
-
-// componentWillUnmount() {
-//   window.removeEventListener("keyup", this.handleEscape);
-// }
-
-// render() {
-//   const blogPosts = this.state.blockArr.map((item, pos) => {
-//     return (
-//       <BlogCard
-//         key={item.id}
-//         title={item.title}
-//         description={item.description}
-//         liked={item.liked}
-//         likePost={() => this.likePost(pos)}
-//         deletePost={() => this.deletePost(pos)}
-//       />
-//     );
-//   });
-
-//   this.addOpenModal = () => {
-//     this.setState({
-//       showAddForm: true,
-//     });
-//   };
-
-//   this.addHideModal = () => {
-//     this.setState({
-//       showAddForm: false,
-//     });
-//   };
-
-//   if(this.state.blockArr.length === 0)
-//   return <h1>LOADING...</h1>
-
-//   return (
-//     <>
-//       {this.state.showAddForm ? (
-//         <AddPostForm
-//           blockArr={this.state.blockArr}
-//           addHideModal={this.addHideModal}
-//           addNewBlogPost={this.addNewBlogPost}
-//         />
-//       ) : null}
-
-//       <button className="buttonTop" onClick={this.toggleBlock}>
-//         {this.state.showBlog ? "Hide Blog" : "Show Blog"}
-//       </button>
-//       {this.state.showBlog ? (
-//         <>
-//           <h1>Simple Blog</h1>
-//           <button onClick={this.addOpenModal} className="buttonRight">
-//             Create new post
-//           </button>
-//           <div className="posts">
-//             <div className="postWrapper">{blogPosts}</div>
-//           </div>
-//         </>
-//       ) : null}
-//     </>
-//   );
-// }
-//}
+                  
+  </Routes> */}

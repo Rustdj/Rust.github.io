@@ -24,7 +24,7 @@ export const LoginPage = ({setUserName, setIsLoggedIn}) => {
     e.preventDefault();
     setUserName(login);
     setIsLoggedIn(true);
-    navigate('/');
+    navigate("/");
   };
 
   return (

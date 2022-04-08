@@ -1,17 +1,11 @@
 import "./EditPostForm.css";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 
-export default function EditPostForm({
-  editClose,
-  selectedPost,
-  editBlogPost,
-  closeEditModal,
-  
-}) {
-  const [postTitle, setPostTitle] = useState(selectedPost.title);
-  const [postDescr, setDescr] = useState(selectedPost.description);
+export default function EditPostForm(props) {
+  const [postTitle, setPostTitle] = useState(props.selectedPost.title);
+  const [postDescr, setDescr] = useState(props.selectedPost.description);
 
   const handleFormTitleChange = (e) => {
     setPostTitle(e.target.value);
@@ -24,21 +18,36 @@ export default function EditPostForm({
   const savePost = (e) => {
     e.preventDefault();
     const post = {
-      id: selectedPost.id,
+      id: props.selectedPost.id,
       title: postTitle,
       description: postDescr,
-      liked: selectedPost.liked,
+      liked: props.selectedPost.liked,
     };
     console.log(post);
-    editBlogPost(post);
-    closeEditModal();
+    props.editBlogPost(post);
+    props.closeEditModal();
     
   };
+
+  
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        props.closeEditModal();
+      }
+    };
+    window.addEventListener('keyup', handleEscape)
+
+    return () => window.removeEventListener('keyup', handleEscape)
+  }, [props])
+
+
 
   return (
     <>
       <form action="" className="editPostForm" onSubmit={savePost}>
-        <button onClick={editClose} className="btnClose">
+        <button onClick={props.editClose} className="btnClose">
           <HighlightOffIcon />
         </button>
         <h2>Post editing</h2>

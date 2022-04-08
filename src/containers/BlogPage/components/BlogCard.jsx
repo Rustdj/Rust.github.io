@@ -28,13 +28,13 @@ export const BlogCard = ({
       <p>{description}</p>
       <p>{body}</p>
       <button className="correctText" onClick={showEditForm}>
-        <CreateIcon style={{ fill: correctText }} />
+        <CreateIcon style={{ fill: correctText, fontSize: 20 }} />
       </button>
       <button className="heartButton" onClick={likePost}>
-        <FavoriteIcon style={{ fill: heartColor, fontSize: 30 }} />
+        <FavoriteIcon style={{ fill: heartColor, fontSize: 25 }} />
       </button>
       <button className="trashButton" onClick={deletePost}>
-        <DeleteOutlineIcon />
+        <DeleteOutlineIcon style={{ fill: correctText, fontSize: 20 }}/>
       </button>
     </div>
   );
