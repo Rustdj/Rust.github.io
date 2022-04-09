@@ -1,30 +1,45 @@
 import "../../App.css";
-import { useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-
-export const LoginPage = ({setUserName, setIsLoggedIn}) => {
-  const navigate = useNavigate()
-  const [login, setLogin] = useState("")
-  const [password, setPassword] = useState("")
+export const LoginPage = ({ setUserName, setIsLoggedIn, setIsAdmin }) => {
+  const navigate = useNavigate();
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLoginChange = (e) => {
-    setLogin(e.target.value)
-  }
+    setLogin(e.target.value);
+  };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
-
-  localStorage.setItem('isLoggerId', true);
-  localStorage.setItem('userName', login);
-
+    setPassword(e.target.value);
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setUserName(login);
-    setIsLoggedIn(true);
-    navigate("/");
+
+    if(login === 'admin') {
+      if(password === '1304') setIsAdmin(true);
+      else {
+        alert('Please enter a password!');
+        return false;
+      }
+    }
+
+    localStorage.setItem("isLoggerId", true);
+    localStorage.setItem("userName", login);
+
+    //if (login === 'admin' && password === '1304') {
+      //setIsAdmin(true);
+      //localStorage.setItem('isAdmin', true) 
+    //}
+    
+      setUserName(login);
+      setIsLoggedIn(true);
+      navigate("/blog");
+
+    
+    
   };
 
   return (
@@ -32,19 +47,19 @@ export const LoginPage = ({setUserName, setIsLoggedIn}) => {
       <h1 className="headerLogin">Authorization</h1>
       <form className="loginForm" onSubmit={handleLogin}>
         <div>
-          <input 
-          type="text" 
-          placeholder="Login" 
-          onChange={handleLoginChange}
-          required
+          <input
+            type="text"
+            placeholder="Login"
+            onChange={handleLoginChange}
+            required
           />
         </div>
         <div>
-          <input 
-          type="password" 
-          placeholder="Password"
-          onChange={handlePasswordChange} 
-          required
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={handlePasswordChange}
+            required
           />
         </div>
         <div>

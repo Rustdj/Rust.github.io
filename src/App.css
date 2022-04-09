@@ -69,9 +69,8 @@ button {
 
 .correctText {
   position: absolute;
-  top: 10px;
-  left: 50%;
-  right: 50%;
+  bottom: 20px;
+  right: 20px;
 }
 
 

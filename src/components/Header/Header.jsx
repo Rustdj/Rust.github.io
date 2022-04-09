@@ -2,10 +2,12 @@ import "./Header.css";
 import { NavLink } from "react-router-dom";
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
-export const Header = ({ isLoggerId, setIsLoggedIn, userName }) => {
+export const Header = ({ isLoggerId, setIsLoggedIn, userName, setIsAdmin }) => {
   const handleLogOut = () => {
-    localStorage.setItem('isLoggerId', false);
+    localStorage.removeItem('isLoggerId');
+    localStorage.removeItem('userName');
     setIsLoggedIn(false);
+    setIsAdmin(false);
   };
   return (
     <header className="headerMain">

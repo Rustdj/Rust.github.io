@@ -12,6 +12,7 @@ export const BlogCard = ({
   deletePost,
   showEditModal,
   handleSelectPost,
+  isAdmin,
 }) => {
   const heartColor = liked ? "red" : "#c4c7c4";
   const background = liked ? "rgb(248 235 238)" : "white";
@@ -24,18 +25,24 @@ export const BlogCard = ({
 
   return (
     <div style={{ backgroundColor: background }} className="post">
-      <h2>{title}</h2>
-      <p>{description}</p>
+      <div className="title">{title}</div>
+      <hr />
+      <p className="descr">{description}</p>
       <p>{body}</p>
-      <button className="correctText" onClick={showEditForm}>
-        <CreateIcon style={{ fill: correctText, fontSize: 20 }} />
-      </button>
       <button className="heartButton" onClick={likePost}>
         <FavoriteIcon style={{ fill: heartColor, fontSize: 25 }} />
       </button>
-      <button className="trashButton" onClick={deletePost}>
-        <DeleteOutlineIcon style={{ fill: correctText, fontSize: 20 }}/>
-      </button>
+      {isAdmin && (
+        <>
+          <button className="correctText" onClick={showEditForm}>
+            <CreateIcon style={{ fill: correctText, fontSize: 20 }} />
+          </button>
+
+          <button className="trashButton" onClick={deletePost}>
+            <DeleteOutlineIcon style={{ fill: correctText, fontSize: 20 }} />
+          </button>
+        </>
+      )}
     </div>
   );
 };

@@ -9,25 +9,38 @@ import { useState } from 'react';
 import NoMatch from './containers/NoMatch/NoMatch';
 
 function App() { 
-  const [isLoggerId, setIsLoggedIn] = useState(localStorage.getItem('isLoggerId'));
+  const [isLoggerId, setIsLoggedIn] = useState(
+    localStorage.getItem('isLoggerId') === "true"
+  );
   const [userName, setUserName] = useState(localStorage.getItem('userName'))
+  const [isAdmin, setIsAdmin] = useState(localStorage.getItem('userName') === "admin");
+  
 
   return (
     <>
         <div className="App">
-          <Header userName={userName} isLoggerId={isLoggerId} setIsLoggedIn={setIsLoggedIn}/>
+          <Header 
+            userName={userName} 
+            isLoggerId={isLoggerId} 
+            setIsLoggedIn={setIsLoggedIn}
+            setIsAdmin={setIsAdmin}
+          />
               <Routes>
 
-                <Route path="/" element={<BlogPage/>}/>
+                <Route path="/blog" element={<BlogPage isAdmin={isAdmin}/>}/>
                 
-                {/* <Route exact path="/*" element={() => { 
-                  if(isLoggerId) return <Navigate replace to="/blog"/>
-                  return <Navigate replace to="/login"/>
-                  }}/> */}
+
 
                 <Route 
                   path="/login" 
-                  element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>}/>
+                  element={
+                    <LoginPage 
+                    setIsLoggedIn={setIsLoggedIn} 
+                    setUserName={setUserName}
+                    setIsAdmin={setIsAdmin}
+                  />
+                }
+              />
 
                 <Route path="*" element={<NoMatch/>}/>
   

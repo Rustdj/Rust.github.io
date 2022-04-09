@@ -7,7 +7,7 @@ import EditPostForm from "./components/EditPostForm";
 import CircularProgress from "@mui/material/CircularProgress";
 import { postsUrl } from "../../shared/projectData";
 
-export const BlogPage = () => {
+export const BlogPage = ({ isAdmin }) => {
   const [listData, setListData] = useState([]);
   const [form, setForm] = useState(false);
   const [editForm, setEditForm] = useState(false);
@@ -21,20 +21,18 @@ export const BlogPage = () => {
   let source;
   const fetchPosts = () => {
     source = axios.CancelToken.source();
-    axios
-      .get(postsUrl)
-      .then((response) => {
-        console.log("Getting posts =>", response.data);
-        setListData([...listData, ...response.data]);
+    axios.get(postsUrl).then((response) => {
+      console.log("Getting posts =>", response.data);
+      setListData([...listData, ...response.data]);
     });
   };
 
   useEffect(() => {
     if (source) {
-      source.cancel()
+      source.cancel();
     }
-    fetchPosts()
-  }, [])
+    fetchPosts();
+  }, []);
 
   // addNewBlogPost
   const addNewBlogPost = (blogPost) => {
@@ -129,9 +127,12 @@ export const BlogPage = () => {
     <>
       {pending && <CircularProgress color="inherit" />}
       {form}
-      <div onClick={showModal} className="modalAdd">
-        <button>Add post</button>
-      </div>
+      {isAdmin && (
+        <div onClick={showModal} className="modalAdd">
+          <button>Add post</button>
+        </div>
+      )}
+
       {listData.map((item, elem) => {
         return (
           <BlogCard
@@ -145,6 +146,7 @@ export const BlogPage = () => {
             likePost={() => likePost(elem)}
             deletePost={() => deletePost(item)}
             handleSelectPost={() => handleSelectPost(item)}
+            isAdmin={isAdmin}
           />
         );
       })}
@@ -172,9 +174,8 @@ export const BlogPage = () => {
   );
 };
 
-
-
-{/* <Routes>
+{
+  /* <Routes>
                 
                 
                   <Route exact path="/" element={() => {
@@ -195,4 +196,5 @@ export const BlogPage = () => {
                   element={<BlogPage setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>}/>
 
                   
-  </Routes> */}
+  </Routes> */
+}
