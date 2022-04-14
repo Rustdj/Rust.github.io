@@ -7,6 +7,9 @@ import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './containers/LoginPage/LoginPage';
 import { useState } from 'react';
 import NoMatch from './containers/NoMatch/NoMatch';
+import { BlogCardPage } from './containers/BlogPage/components/BlogCardPage';
+import { BlogCard } from './containers/BlogPage/components/BlogCard';
+import { useGetPosts } from './shared/queries';
 
 function App() { 
   const [isLoggerId, setIsLoggedIn] = useState(
@@ -14,7 +17,8 @@ function App() {
   );
   const [userName, setUserName] = useState(localStorage.getItem('userName'))
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('userName') === "admin");
-  
+
+  const { data, isLoading, isError, error, isFetching } = useGetPosts();
 
   return (
     <>
@@ -27,10 +31,6 @@ function App() {
           />
               <Routes>
 
-                <Route path="/blog" element={<BlogPage isAdmin={isAdmin}/>}/>
-                
-
-
                 <Route 
                   path="/login" 
                   element={
@@ -42,7 +42,31 @@ function App() {
                 }
               />
 
-                <Route path="*" element={<NoMatch/>}/>
+                <Route 
+                  path="/blog/" 
+                  element={
+                  <BlogPage 
+                  isAdmin={isAdmin}
+                />
+              }
+            />
+
+                <Route 
+                  path="/blog/:postId" 
+                  element={
+                  <BlogCardPage 
+                  isAdmin={isAdmin}
+                />
+              }
+            />
+                
+                <Route 
+                  path="*" 
+                  element={
+                  <NoMatch
+                  />
+                }
+              />
   
               </Routes>
           <Footer year={new Date().getFullYear()} />

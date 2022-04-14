@@ -3,6 +3,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CreateIcon from "@mui/icons-material/Create";
 
+
 export const BlogCard = ({
   title,
   description,
@@ -22,6 +23,7 @@ export const BlogCard = ({
     handleSelectPost();
     showEditModal();
   };
+
 
   return (
     <div style={{ backgroundColor: background }} className="post">

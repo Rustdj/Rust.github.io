@@ -6,8 +6,8 @@ body {
 }
 
 .App {
-  /* text-align: center; */
   background-color: #478dbf;
+  height: 100vh;
 }
 
 .App-logo {
@@ -15,11 +15,6 @@ body {
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -78,7 +73,7 @@ button {
 
 .loginForm {
   text-align: center;
-  height: 375px;
+  height: 54.5vh;
 }
 
 .loginForm input {

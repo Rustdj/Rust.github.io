@@ -2,10 +2,14 @@ import "./BlogPage.css";
 import { BlogCard } from "./components/BlogCard";
 import AddPostForm from "./components/AddPostForm";
 import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState } from "react";
 import EditPostForm from "./components/EditPostForm";
 import CircularProgress from "@mui/material/CircularProgress";
 import { postsUrl } from "../../shared/projectData";
+import { Link } from "react-router-dom";
+import { useDeletePost, useGetPosts, useLikePost } from "../../shared/queries";
+
+//let source;
 
 export const BlogPage = ({ isAdmin }) => {
   const [listData, setListData] = useState([]);
@@ -17,22 +21,25 @@ export const BlogPage = ({ isAdmin }) => {
   const onClose = () => setForm(false);
   const editClose = () => setEditForm(false);
 
-  // API async
-  let source;
-  const fetchPosts = () => {
-    source = axios.CancelToken.source();
-    axios.get(postsUrl).then((response) => {
-      console.log("Getting posts =>", response.data);
-      setListData([...listData, ...response.data]);
-    });
-  };
+  const { data: posts, isLoading, isError, error, isFetching, refetch } = useGetPosts();
 
-  useEffect(() => {
-    if (source) {
-      source.cancel();
-    }
-    fetchPosts();
-  }, []);
+  const likeMutation = useLikePost();
+  const deleteMutation = useDeletePost();
+
+  // loading
+  if (isError) return <h1>Error {error.message}</h1>;
+  if (isLoading) return <h1>LOADING...</h1>;
+
+
+  // liked
+  const likePost = (blogPost) => {
+    const updatePost = { ...blogPost };
+    updatePost.liked = !updatePost.liked;
+
+    likeMutation.mutateAsync(updatePost)
+      .then(refetch)
+      .catch((err) => console.log(err))
+  };
 
   // addNewBlogPost
   const addNewBlogPost = (blogPost) => {
@@ -41,7 +48,7 @@ export const BlogPage = ({ isAdmin }) => {
       .post(postsUrl, blogPost)
       .then((response) => {
         console.log("Mounted post =>", response.data);
-        fetchPosts();
+        //fetchPosts();
       })
       .catch((err) => {
         console.log(err);
@@ -50,11 +57,12 @@ export const BlogPage = ({ isAdmin }) => {
 
   //editBlogPost
   const editBlogPost = (updateBlogPost) => {
+    setPending(true);
     axios
       .put(`${postsUrl}${updateBlogPost.id}`, updateBlogPost)
       .then((response) => {
         console.log("Correct post =>", response.data);
-        fetchPosts();
+        //fetchPosts();
       })
       .catch((err) => {
         console.log(err);
@@ -64,38 +72,11 @@ export const BlogPage = ({ isAdmin }) => {
   // delete posts
   const deletePost = (blogPost) => {
     if (window.confirm(`Удалить ${blogPost.title}?`)) {
-      setPending(true);
-      axios
-        .delete(`${postsUrl}${blogPost.id}`, blogPost)
-        .then((response) => {
-          console.log("Deleted post =>", response.data);
-          fetchPosts();
-          setPending(pending);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      deleteMutation.mutateAsync(blogPost)
+        .then(refetch)
+        .catch((err) => console.log(err))
     }
   };
-
-  // liked
-  const likePost = (blogPost) => {
-    const temp = [...listData];
-    temp[blogPost].liked = !temp[blogPost].liked;
-    setListData(temp);
-    axios
-      .put(`${postsUrl}${blogPost.id}`, temp)
-      .then((response) => {
-        console.log("Liked post =>", response.data);
-        //fetchPosts();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // loading
-  if (listData.length === 0) <h1>LOADING...</h1>;
 
   // editPost
   const handleSelectPost = (blogPost) => {
@@ -122,7 +103,28 @@ export const BlogPage = ({ isAdmin }) => {
     setEditForm(false);
   };
 
-  //console.log(selectedPost);
+  const blogPost = posts.map((item) => {
+    return (
+      <React.Fragment key={item.id}>
+        <BlogCard
+          liked={item.liked}
+          thumbnailUrl={item.thumbnailUrl}
+          title={item.title}
+          body={item.body}
+          description={item.description}
+          showEditModal={showEditModal}
+          likePost={() => likePost(item)}
+          deletePost={() => deletePost(item)}
+          handleSelectPost={() => handleSelectPost(item)}
+          isAdmin={isAdmin}
+        />
+        <Link to={`/blog/${item.id}`}>Подробнее</Link>
+      </React.Fragment>
+    );
+  });
+
+  const postsOpacity = isFetching ? 0.5 : 1;
+
   return (
     <>
       {pending && <CircularProgress color="inherit" />}
@@ -132,24 +134,27 @@ export const BlogPage = ({ isAdmin }) => {
           <button>Add post</button>
         </div>
       )}
+      {blogPost}
 
-      {listData.map((item, elem) => {
+      {/* {posts.map((item, elem) => {
         return (
-          <BlogCard
-            key={elem}
-            liked={item.liked}
-            thumbnailUrl={item.thumbnailUrl}
-            title={item.title}
-            body={item.body}
-            description={item.description}
-            showEditModal={showEditModal}
-            likePost={() => likePost(elem)}
-            deletePost={() => deletePost(item)}
-            handleSelectPost={() => handleSelectPost(item)}
-            isAdmin={isAdmin}
-          />
+          <React.Fragment key={item.id}>
+            <BlogCard
+              liked={item.liked}
+              thumbnailUrl={item.thumbnailUrl}
+              title={item.title}
+              body={item.body}
+              description={item.description}
+              showEditModal={showEditModal}
+              likePost={() => likePost(elem)}
+              deletePost={() => deletePost(item)}
+              handleSelectPost={() => handleSelectPost(item)}
+              isAdmin={isAdmin}
+            />
+            <Link to={`/blog/${item.id}`}>Подробнее</Link>
+          </React.Fragment>
         );
-      })}
+      })} */}
 
       {editForm && (
         <EditPostForm
@@ -165,7 +170,7 @@ export const BlogPage = ({ isAdmin }) => {
         <AddPostForm
           setForm={setForm}
           onClose={onClose}
-          listData={listData}
+          //listData={listData}
           addNewBlogPost={addNewBlogPost}
           closeModal={closeModal}
         />
@@ -173,28 +178,3 @@ export const BlogPage = ({ isAdmin }) => {
     </>
   );
 };
-
-{
-  /* <Routes>
-                
-                
-                  <Route exact path="/" element={() => {
-                    if(isLoggerId) return <Navigate to="/blog"/>
-                    return <Navigate to="/login" />
-                  }} />
-                
-
-                <Route 
-                  exact
-                  path="/login" 
-                  element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>}/>
-
-
-                <Route 
-                  exact
-                  path="/blog" 
-                  element={<BlogPage setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>}/>
-
-                  
-  </Routes> */
-}
