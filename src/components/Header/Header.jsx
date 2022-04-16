@@ -14,7 +14,7 @@ export const Header = ({ isLoggerId, setIsLoggedIn, userName, setIsAdmin }) => {
       {isLoggerId ? (
         <nav>
           <div className="top">Welcome dear user, <strong>{userName}</strong></div>
-          <NavLink onClick={handleLogOut} to="/login">
+          <NavLink onClick={handleLogOut} to="/">
             LogOut
             <MeetingRoomIcon/>
           </NavLink>

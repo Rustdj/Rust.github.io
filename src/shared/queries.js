@@ -43,3 +43,44 @@ export const useDeletePost = () => {
         }
     )
 }
+
+export const useAddPost = () => {
+    return useMutation(
+        (blogPost) => {
+            return axios.post(postsUrl, blogPost)
+                .then(res => res.data)
+                .catch(err => {
+                    throw new Error(err)
+                })
+        }
+    )
+}
+
+export const useEditPost = () => {
+    return useMutation(
+        (updateBlogPost) => {
+            return axios.put(`${postsUrl}${updateBlogPost.id}`, updateBlogPost)
+                .then(res => res.data)
+                .catch(err => {
+                    throw new Error(err)
+                })
+        }
+    )
+}
+
+
+
+//=========
+
+export const useGetSinglePosts = (postId) => {
+    return useQuery(['posts', postId], () => {
+        return axios.get(postsUrl + postId)
+            .then(res => res.data)
+            .catch(err => {
+                throw new Error(err)
+            })
+    }, {
+        refetchOnWindowFocus: false,
+        //staleTime:
+    })
+}

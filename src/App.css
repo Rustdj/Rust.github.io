@@ -5,7 +5,7 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
-.App {
+/* .App {
   background-color: #478dbf;
   height: 100vh;
 }
@@ -13,7 +13,7 @@ body {
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
+} */
 
 
 .App-header {
@@ -110,6 +110,12 @@ button {
   font-family: fantasy;
 }
 
+/* theme */
+.toggleTheme {
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
 
 
 

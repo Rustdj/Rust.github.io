@@ -2,14 +2,17 @@ import './App.css';
 import { BlogPage } from './containers/BlogPage/BlogPage.jsx';
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
-import { Navigate} from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './containers/LoginPage/LoginPage';
 import { useState } from 'react';
 import NoMatch from './containers/NoMatch/NoMatch';
 import { BlogCardPage } from './containers/BlogPage/components/BlogCardPage';
-import { BlogCard } from './containers/BlogPage/components/BlogCard';
-import { useGetPosts } from './shared/queries';
+
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, GlobalStyles } from "./components/Theme";
+import CustomizedSwitches from './shared/Switch';
+
+
 
 function App() { 
   const [isLoggerId, setIsLoggedIn] = useState(
@@ -18,21 +21,36 @@ function App() {
   const [userName, setUserName] = useState(localStorage.getItem('userName'))
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('userName') === "admin");
 
-  const { data, isLoading, isError, error, isFetching } = useGetPosts();
+  //=======themes========
 
-  return (
+    const [theme, setTheme] = useState("light");
+  
+  const switchTheme = () => {
+      theme === "light" ? setTheme("dark") : setTheme("light");
+    };
+
+  //=====================
+
+  return ( 
     <>
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
         <div className="App">
+        
+        <GlobalStyles /> 
+            
+        
           <Header 
             userName={userName} 
             isLoggerId={isLoggerId} 
             setIsLoggedIn={setIsLoggedIn}
             setIsAdmin={setIsAdmin}
           />
+          <button className="toggleTheme" onClick={switchTheme}><CustomizedSwitches /></button>
+          
               <Routes>
 
                 <Route 
-                  path="/login" 
+                  path="/" 
                   element={
                     <LoginPage 
                     setIsLoggedIn={setIsLoggedIn} 
@@ -71,11 +89,8 @@ function App() {
               </Routes>
           <Footer year={new Date().getFullYear()} />
         </div> 
-    </>
-    
-    
-    
-    
+        </ThemeProvider>
+    </> 
   );
 }
 

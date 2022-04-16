@@ -3,88 +3,75 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CreateIcon from "@mui/icons-material/Create";
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { postsUrl } from "../../../shared/projectData";
+import { useState } from "react";
 import EditPostForm from "./EditPostForm";
 import CircularProgress from "@mui/material/CircularProgress";
+import {
+  useDeletePost,
+  useEditPost,
+  useGetSinglePosts,
+  useLikePost,
+} from "../../../shared/queries";
 
 export const BlogCardPage = ({ isAdmin }) => {
   const correctText = "#c4c7c4";
   const { postId } = useParams();
   const [selectedPost, setSelectedPost] = useState({});
-  const [post, setPost] = useState({});
   const [pending, setPending] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const navigate = useNavigate();
 
   //=============
 
-  // API async
+  const {
+    data: posts,
+    isLoading,
+    isError,
+    error,
+    isFetching,
+    refetch,
+  } = useGetSinglePosts(postId);
 
-  const fetchPost = (id) => {
-    axios
-      .get(postsUrl + id)
-      .then((response) => {
-        console.log(response.data);
-        setPost(response.data);
-        setPending(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  //customHooks
+  const likeMutation = useLikePost();
+  const deleteMutation = useDeletePost();
+  const editMutation = useEditPost();
 
-  useEffect(() => {
-    fetchPost(postId);
-  }, [postId]);
+  if (isError) return <h1>Error {error.message}</h1>;
+  if (isLoading) return <h1>LOADING...</h1>;
 
   // liked
-  const likePost = () => {
-    const temp = { ...post };
-    temp.liked = !temp.liked;
+  const likePost = (blogPost) => {
+    const updatePost = { ...blogPost };
+    updatePost.liked = !updatePost.liked;
 
-    axios
-      .put(`${postsUrl}${postId}`, temp)
-      .then((response) => {
-        console.log("Liked post =>", response.data);
-        fetchPost(postId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // delete posts
-  const deletePost = () => {
-    if (window.confirm(`Удалить ${post.title}?`)) {
-      setPending(true);
-      axios
-        .delete(`${postsUrl}${postId}`)
-        .then((response) => {
-          console.log("Deleted post =>", response.data);
-          setPending(false);
-          fetchPost(postId);
-          navigate.push("/blog");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    likeMutation
+      .mutateAsync(updatePost)
+      .then(refetch)
+      .catch((err) => console.log(err));
   };
 
   //editBlogPost
   const editBlogPost = (updateBlogPost) => {
-    setPending(true);
-    axios
-      .put(`${postsUrl}${postId}`, updateBlogPost)
-      .then((response) => {
-        console.log("Correct post =>", response.data);
-        fetchPost(postId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    editMutation
+      .mutateAsync(updateBlogPost)
+      .then(() => navigate("/blog"))
+      .catch((err) => console.log(err));
+  };
+
+  // delete posts
+  const deletePost = (blogPost) => {
+    if (window.confirm(`Удалить ${blogPost.title}?`)) {
+      deleteMutation
+        .mutateAsync(blogPost)
+        .then(() => navigate("/blog"))
+        .catch((err) => console.log(err));
+    }
+  };
+
+  // editPost
+  const handleSelectPost = (blogPost) => {
+    setSelectedPost(blogPost);
   };
 
   // showEditModal
@@ -98,9 +85,9 @@ export const BlogCardPage = ({ isAdmin }) => {
     setEditForm(false);
   };
 
-  if (!post.title) return <h1>LOADING...</h1>;
+  if (!posts.title) return <h1>LOADING...</h1>;
   const postsOpacity = pending ? 0.5 : 1;
-  const heartFill = post.liked ? "red" : "#c4c7c4";
+  const heartFill = posts.liked ? "red" : "#c4c7c4";
 
   return (
     <>
@@ -112,26 +99,29 @@ export const BlogCardPage = ({ isAdmin }) => {
             editBlogPost={editBlogPost}
           />
         )}
-        <div className="title">{post.title}</div>
+        <div className="title">{posts.title}</div>
         <hr />
-        <p className="descr">{post.description}</p>
+        <p className="descr">{posts.description}</p>
 
-        <button className="heartButton" onClick={likePost}>
+        <button className="heartButton" onClick={() => likePost(posts)}>
           <FavoriteIcon style={{ fill: heartFill, fontSize: 25 }} />
         </button>
         {isAdmin && (
           <>
-            <button className="correctText" onClick={() => showEditModal(post)}>
+            <button
+              className="correctText"
+              onClick={() => showEditModal(posts)}
+            >
               <CreateIcon style={{ fill: correctText, fontSize: 20 }} />
             </button>
 
-            <button className="trashButton" onClick={deletePost}>
+            <button className="trashButton" onClick={() => deletePost(posts)}>
               <DeleteOutlineIcon style={{ fill: correctText, fontSize: 20 }} />
             </button>
           </>
         )}
       </div>
-      {pending && <CircularProgress className="loader" />}
+      {isFetching && <CircularProgress className="loader" />}
     </>
   );
 };
