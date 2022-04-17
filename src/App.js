@@ -23,7 +23,7 @@ function App() {
 
   //=======themes========
 
-    const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("light");
   
   const switchTheme = () => {
       theme === "light" ? setTheme("dark") : setTheme("light");
@@ -44,8 +44,9 @@ function App() {
             isLoggerId={isLoggerId} 
             setIsLoggedIn={setIsLoggedIn}
             setIsAdmin={setIsAdmin}
+            CustomizedSwitches={CustomizedSwitches}
+            switchTheme={switchTheme}
           />
-          <button className="toggleTheme" onClick={switchTheme}><CustomizedSwitches /></button>
           
               <Routes>
 

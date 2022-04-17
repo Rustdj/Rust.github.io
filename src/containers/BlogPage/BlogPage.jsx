@@ -32,6 +32,7 @@ export const BlogPage = ({ isAdmin }) => {
     isFetching,
     refetch,
   } = useGetPosts();
+  
 
   // customHooks
   const likeMutation = useLikePost();
@@ -120,7 +121,7 @@ export const BlogPage = ({ isAdmin }) => {
           handleSelectPost={() => handleSelectPost(item)}
           isAdmin={isAdmin}
         />
-        <Link to={`/blog/${item.id}`}>Подробнее</Link>
+        <Link style={{ textDecoration: 'none' }} className="moreDet" to={`/blog/${item.id}`}>Подробнее</Link>
       </React.Fragment>
     );
   });
@@ -136,7 +137,7 @@ export const BlogPage = ({ isAdmin }) => {
           <button>Add post</button>
         </div>
       )}
-      <div style={{opacity: postsOpacity}}>{blogPost}</div>
+      <div className="parentPost" style={{opacity: postsOpacity}}>{blogPost}</div>
 
       {editForm && (
         <EditPostForm

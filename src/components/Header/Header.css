@@ -1,10 +1,13 @@
 .headerMain {
+    position: fixed;
+    width: 100%;
     background-color: aliceblue;
     text-align: center;
     padding: 10px;
-    box-shadow: rgb(204 204 204) 0px 2px 10px;
+    box-shadow: rgb(34 65 185) 0px 2px 30px;
     height: 60px;
     line-height: 3;
+    z-index: 1;
 }
 .headerMain h2 {
     line-height: 20px;

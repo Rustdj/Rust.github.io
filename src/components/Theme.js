@@ -9,9 +9,9 @@ export const darkTheme = {
   }
   
   export const lightTheme = {
-    body: "#ECFFDC",
+    body: "#ffd",
     textColor: "#000",
-    headingColor: "red"
+    headingColor: "red",
   }
   
   export const GlobalStyles = createGlobalStyle`
@@ -23,4 +23,5 @@ export const darkTheme = {
    h2{
      color: ${props => props.theme.headingColor};
    }
+   
   `
