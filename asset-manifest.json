@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Rustdj/react-blog/static/css/main.5e25adb2.css",
+    "main.js": "/Rustdj/react-blog/static/js/main.6c051756.js",
+    "static/js/787.9e0c1f39.chunk.js": "/Rustdj/react-blog/static/js/787.9e0c1f39.chunk.js",
+    "index.html": "/Rustdj/react-blog/index.html",
+    "main.5e25adb2.css.map": "/Rustdj/react-blog/static/css/main.5e25adb2.css.map",
+    "main.6c051756.js.map": "/Rustdj/react-blog/static/js/main.6c051756.js.map",
+    "787.9e0c1f39.chunk.js.map": "/Rustdj/react-blog/static/js/787.9e0c1f39.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5e25adb2.css",
+    "static/js/main.6c051756.js"
+  ]
+}
