@@ -5,12 +5,11 @@
     transform: translate(-50%, -50%);
     z-index: 100;
     background-color: white;
-    width: 400px;
+    max-width: 100%;
     padding: 20px;
     text-align: center;
     border-radius: 10px;
-    background-color: #29de92;
-    opacity: .8;
+    opacity: .9;
 }
 
 .editPostForm div + div {

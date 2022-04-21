@@ -1,13 +1,14 @@
 .headerMain {
     position: fixed;
     width: 100%;
-    background-color: aliceblue;
+    background: linear-gradient(to right, #FFDDD6 20%, #FFF9ED 20%, #FFF9ED 80%, #DBDBDB 80%);
     text-align: center;
     padding: 10px;
     box-shadow: rgb(34 65 185) 0px 2px 30px;
     height: 60px;
     line-height: 3;
     z-index: 1;
+    top: 0;
 }
 .headerMain h2 {
     line-height: 20px;

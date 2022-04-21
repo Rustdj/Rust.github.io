@@ -3,7 +3,7 @@ import "./Footer.css";
 export const Footer = ({ year }) => {
   return (
     <footer>
-      <span>© Raikerus - {year}</span>
+      <span>© Frontend dev Raikerus - {year}</span>
     </footer>
   );
 };

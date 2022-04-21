@@ -19,7 +19,6 @@ export const BlogPage = ({ isAdmin }) => {
   const [form, setForm] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const [selectedPost, setSelectedPost] = useState({});
-  
 
   const onClose = () => setForm(false);
   const editClose = () => setEditForm(false);
@@ -32,7 +31,6 @@ export const BlogPage = ({ isAdmin }) => {
     isFetching,
     refetch,
   } = useGetPosts();
-  
 
   // customHooks
   const likeMutation = useLikePost();
@@ -121,7 +119,13 @@ export const BlogPage = ({ isAdmin }) => {
           handleSelectPost={() => handleSelectPost(item)}
           isAdmin={isAdmin}
         />
-        <Link style={{ textDecoration: 'none' }} className="moreDet" to={`/blog/${item.id}`}>Подробнее</Link>
+        <Link
+          style={{ textDecoration: "none" }}
+          className="moreDet"
+          to={`/blog/${item.id}`}
+        >
+          More
+        </Link>
       </React.Fragment>
     );
   });
@@ -137,7 +141,9 @@ export const BlogPage = ({ isAdmin }) => {
           <button>Add post</button>
         </div>
       )}
-      <div className="parentPost" style={{opacity: postsOpacity}}>{blogPost}</div>
+      <div className="parentPost" style={{ opacity: postsOpacity }}>
+        {blogPost}
+      </div>
 
       {editForm && (
         <EditPostForm
@@ -153,7 +159,6 @@ export const BlogPage = ({ isAdmin }) => {
         <AddPostForm
           setForm={setForm}
           onClose={onClose}
-          //listData={listData}
           addNewBlogPost={addNewBlogPost}
           closeModal={closeModal}
         />

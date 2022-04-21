@@ -25,6 +25,15 @@
     color: white;
     font-size: 16px;
     font-family: 'Nunito', sans-serif;
+    transition: all 0.5s;
+}
+
+.buttons:hover {
+    transition: all 0.5s;
+    background-color: #000;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 1px 2px 15px;
 }
 
 .buttonTop {
@@ -67,6 +76,7 @@
     box-shadow: 1px 1px 7px;
     width: 48%;
     top: 105px;
+    opacity: 0.8;
     right: 0;
     bottom: 0;
     left: 0;
@@ -117,18 +127,15 @@ hr {
 }
 
 .moreDet {
+    color: #ff000066;
     position: relative;
-    left: 47.4%;
+    left: 48%;
     top: 60px;
-}
-
-.moreDet {
-    color:#656161;
     transition: all 0.3s;
 }
 
 .moreDet:hover {
-    color: red;
+    color: #ff000066;
     transition: all 0.3s;
     letter-spacing: 2px;
 }

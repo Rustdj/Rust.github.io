@@ -1,17 +1,17 @@
-import {createGlobalStyle} from "styled-components";
+  import {createGlobalStyle} from "styled-components";
 
+  
 
-
-export const darkTheme = {
-    body: "#191970",
-    textColor: "#708090",
-    headingColor: "lightblue"
+  export const darkTheme = {
+      body: "linear-gradient(circle at 90% 4%, aqua, darkblue)",
+      textColor: "#708090",
+      headingColor: "lightblue",
   }
   
   export const lightTheme = {
-    body: "#ffd",
+    body: "linear-gradient(to top left, powderblue, pink)",
     textColor: "#000",
-    headingColor: "red",
+    headingColor: "#465607",
   }
   
   export const GlobalStyles = createGlobalStyle`
