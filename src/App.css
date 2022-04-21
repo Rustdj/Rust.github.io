@@ -29,15 +29,6 @@ body {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 button {
   cursor: pointer;
   background-color: unset;
@@ -62,9 +53,7 @@ button {
   top: 35px;
 }
 
-.btnClose {
-  margin: 0px 0px 0px 90%;
-}
+
 
 .correctText {
   position: absolute;
@@ -104,7 +93,6 @@ button {
   width: 286px;
   font-family: fantasy;
   font-size: 20px;
-  
   /* background: radial-gradient(farthest-side ellipse at top left, white, #aaaaaa); */
   background: radial-gradient(circle at 65% 15%, aqua, darkblue);
   box-shadow: 5px 10px 20px rgb(0 0 0 / 30%), -5px -10px 20px rgb(255 255 255 / 50%);
@@ -112,6 +100,19 @@ button {
   height: 100px;
   border-radius: 50%;
 }
+
+/* @keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+/* .btnLogin {
+  animation: spin 10s linear 0s infinite;
+} */
 
 .btnLogin:hover {
   transition: all 0.5s;
@@ -143,6 +144,10 @@ button {
 .adminLog {
   text-align: center;
   font-family: fantasy;
+}
+
+.weather h2 {
+  padding: 20px;
 }
 
 

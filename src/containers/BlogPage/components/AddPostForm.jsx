@@ -35,7 +35,7 @@ export default function AddPostForm({
     <>
       <form action="" className="addPostForm">
         <button onClick={onClose} className="btnClose">
-          <HighlightOffIcon />
+          <HighlightOffIcon style={{fontSize: 30, color: 'grey'}}/>
         </button>
         <h2>Create post</h2>
         <div className="input">
@@ -59,7 +59,7 @@ export default function AddPostForm({
         </div>
         <div>
           <button onClick={createPost} className="buttons" type="submit">
-            Add new post
+            Add
           </button>
         </div>
       </form>

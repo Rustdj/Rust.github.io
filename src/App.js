@@ -14,6 +14,7 @@ import CustomizedSwitches from './shared/Switch';
 
 
 
+
 function App() { 
   const [isLoggerId, setIsLoggedIn] = useState(
     localStorage.getItem('isLoggerId') === "true"
@@ -31,13 +32,16 @@ function App() {
 
   //=====================
 
+  
+
+  
+
   return ( 
     <>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
         <div className="App">
         
         <GlobalStyles /> 
-            
         
           <Header 
             userName={userName} 
@@ -47,7 +51,6 @@ function App() {
             CustomizedSwitches={CustomizedSwitches}
             switchTheme={switchTheme}
           />
-          
               <Routes>
 
                 <Route 

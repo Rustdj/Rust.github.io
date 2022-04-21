@@ -2,6 +2,7 @@
   "name": "react-blog",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/Rustdj/react-blog",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -47,5 +48,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rustdj/react-blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rustdj/react-blog/issues"
   }
 }

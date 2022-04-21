@@ -26,6 +26,11 @@
     font-size: 16px;
     font-family: 'Nunito', sans-serif;
     transition: all 0.5s;
+    background: radial-gradient(circle at 65% 15%, aqua, darkblue);
+    box-shadow: 5px 10px 20px rgb(0 0 0 / 30%), -5px -10px 20px rgb(255 255 255 / 50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 .buttons:hover {
@@ -82,19 +87,44 @@
     left: 0;
     margin: auto;
     background-color: aliceblue;
+    transition: all .2s;
 }
+
+.post:hover {
+    opacity: 1;
+    transition: all .2s;
+    background: linear-gradient(to bottom, rgb(231, 233, 235), pink);
+
+}
+
 h1 {
     color: #fff;
 }
 .modalAdd button {
     position: absolute;
-    border: 1px solid;
     border-radius: 8px;
     padding: 10px;
     left: 54px;
     top: 105px;
     transition: all 0.5s;
+    background: radial-gradient(circle at 65% 15%, aqua, darkblue);
+    box-shadow: 5px 10px 20px rgb(0 0 0 / 30%), -5px -10px 20px rgb(255 255 255 / 50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
 }
+
+/* @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}
+.modalAdd button {
+    animation: spin 10s linear 0s infinite;
+} */
 
 .modalAdd button:hover {
     transition: all 0.5s;

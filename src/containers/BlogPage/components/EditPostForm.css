@@ -10,6 +10,17 @@
     text-align: center;
     border-radius: 10px;
     opacity: .9;
+    background: radial-gradient(circle at 74% 81%, #f3ffff, #0c78b7);
+}
+
+.editClose {
+    margin: 0px 0px 0px 90%;
+    transition: all 0.4s;
+}
+
+.editClose:hover {
+    transform: scale(1.3);
+    transition: all 0.4s;
 }
 
 .editPostForm div + div {

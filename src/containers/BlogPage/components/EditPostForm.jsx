@@ -47,8 +47,8 @@ export default function EditPostForm(props) {
   return (
     <>
       <form action="" className="editPostForm" onSubmit={savePost}>
-        <button onClick={props.editClose} className="btnClose">
-          <HighlightOffIcon />
+        <button onClick={props.editClose} className="editClose">
+          <HighlightOffIcon style={{fontSize: 30, color: 'grey'}}/>
         </button>
         <h2>Post editing</h2>
         <div className="input">

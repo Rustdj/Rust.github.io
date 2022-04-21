@@ -9,10 +9,12 @@ export const Header = ({ isLoggerId, setIsLoggedIn, userName, setIsAdmin, Custom
     setIsLoggedIn(false);
     setIsAdmin(false);
   };
+
   return (
     <header className="headerMain">
       {isLoggerId ? (
         <nav>
+          
           <button className="toggleTheme" onClick={switchTheme}><CustomizedSwitches /></button>
           <div className="top">Welcome dear user, <strong>{userName}</strong></div>
           <NavLink onClick={handleLogOut} to="/">
