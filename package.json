@@ -64,5 +64,6 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Rustdj/react-blog/issues"
-  }
+  },
+  "keywords": []
 }
